@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Gestión de juegos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="../css/shards.min.css">
+</head>
+<body style="background: gray">
+	<div th:switch="${games}" class="container my-5"  style="background: black">
+		<div class="row">
+			<div class="col-md-10">
+				<h2 th:case="null" style="color:white">No se encuentra ningun juego</h2>
+				<div th:case="*">
+					<h2 class="my-5" style="color:white">Administracion de los juegos <i ></i></h2>
+					<MARQUEE style="color:white"> Taller Numero 2 Miguel Romero Rosas </MARQUEE>
+					<table class="table table-striped table-responsive-md">
+						<thead style="color:white">
+							<tr>
+							    <th>Nombre Juego</th>
+							    <th>Fecha</th>
+							    <th>Hora</th>
+								<th>Grupos de Juego</th>
+								<th>Sprints de Juego</th>
+								<th>Inicio Real</th>
+								<th>Editar Juego</th>
+								<th>Borrar Juego</th>
+								<th>Historias Asociadas Juego</th>
+								<th>Tema Asociadas Juego</th>
+							</tr>
+						</thead >
+						<tbody >
+							<tr th:each="game : ${games}" style="color:white">
+							    <td class="text-info" th:text="${game.name}"></td>
+							    <td class="text-info" th:text="${game.scheduledDate}"></td>
+								<td class="text-info" th:text="${game.scheduledTime}"></td>
+								<td class="text-info" th:text="${game.nGroups}"></td>
+								<td class="text-info" th:text="${game.nSprints}"></td>
+								<td class="text-info" th:text="${game.startTime}"></td>
+								<td><a th:href="@{/gameCap/edit/{id}(id=${game.id})}"
+									class="btn btn-primary"><i class="fas fa-text-height fa-spin"></i></a></td>
+								<td><a th:href="@{/gameCap/del/{id}(id=${game.id})}"
+									class="btn btn-primary"><i class="far fa-trash-alt fa-spin"></i></a></td>
+									
+							    <td>
+							    
+							    <span th:if=${!game.tsscStories.isEmpty()}>
+							     <a th:href="@{/gameCap/stories/{id}(id=${game.id})}"
+									class="btn btn-primary" title="Hay historias asociadas"><i class="fas fa-monument fa-spin"></i></a>
+								
+								</span>
+								
+								<span th:if=${game.tsscStories.isEmpty()}>	
+								
+								<a th:href="@{/gameCap/stories/{id}(id=${game.id})}" class="btn btn-primary" title="No hay historias asociadas"><i class="fas fa-monument fa-spin"></i></a>
+								
+								</span>
+								
+							    </td>
+							    
+								<td><span th:if=${game.tsscTopic!=null}> 
+								   
+								    <a th:href="@{/gameCap/topic/{id}(id=${game.id})}" class="btn btn-primary" title="Si existe un tema asociado al juego"><i class="fas fa-award fa-spin"></i></a>
+									
+									</span>
+									
+									<span th:if=${game.tsscTopic==null}>
+									
+					                 <a th:href="@{/gameCap/topic/{id}(id=${game.id})}" class="btn btn-primary" title="Si existe un tema asociado al juego"><i class="fas fa-award fa-spin"></i></a>
+									
+									</span>
+									</td>
+																	
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<p class="my-5">
+					<a href="/gameCap/add" class="btn btn-primary">Agregar nuevo juego</a>
+				</p>
+
+			</div>
+		</div>
+		<a href="/"> Volver a la pagina anterior <i class="fas fa-home ml-2"></i></a>
+	</div>
+</body>
+</html>

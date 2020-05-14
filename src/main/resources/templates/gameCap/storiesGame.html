@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+
+</head>
+<body  style="background: black">
+<div th:switch="${stories}" class="container my-5">
+ <div class="row">
+	<div class="col-md-10">
+		<h2 th:case="null" style="color:white">No Existen Stories en los registros!</h2>
+		  <div th:case="*">
+			<h2 class="my-5" style="color:white">Administracion de  las Stories </h2>
+			<div style="color:yellow">
+			<h4 class="my-5" style="color:white">Nombre del Juego  al cual pertenecen las stories: </h4>
+			<tr th:each="story : ${stories}">
+			<td class="text-info" th:text="${story.tsscGame.name}"></td>
+			</div>
+			
+			  <table class="table table-striped table-responsive-md">
+				<thead style="color:white">
+				  <tr>
+					<th>Id de la historia</th>
+					<th>Descripción de la historia</th>
+					<th>Valor de Negocio de la historia</th>
+					<th>Sprint Inicial de la historia</th>
+					<th>Prioridad de la historia</th>
+					<th>Juego Asociado a la historia</th>
+					<th>Editar la historia</th>
+					<th>Borrar la historia</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr th:each="story : ${stories}">
+					<td class="text-info" th:text="${story.id}"></td>
+					<td class="text-info" th:text="${story.description}">
+					</td>
+					<td class="text-info" th:text="${story.businessValue}">
+					</td>
+					<td class="text-info" th:text="${story.initialSprint}">
+					</td>
+					<td class="text-info" th:text="${story.priority}">
+					</td>
+					<td class="text-info" th:text="${story.tsscGame.name}">
+					</td>
+					<td><a th:href="@{/storyCap/edit/{id}(id=${story.id})}"class="btn btn-primary"><i class="fas fa-strikethrough fa-spin"></i></a></td>
+					<td><a th:href="@{/storyCap/del/{id}(id=${story.id})}"class="btn btn-primary"><i class="fab fa-apple-pay fa-spin"></i></a></td></tr>
+				</tbody>
+				</table>
+				</div>
+				<p class="my-5"><a href="/storyCap/add" class="btn btn-primary">Agregar una nueva Historia</a></p></div>
+		</div>
+		<a href="/gameCap/">  Volver a la pagina anterior <i class="fas fa-home ml-2"></i></a>
+	</div>
+</body>
+</html>

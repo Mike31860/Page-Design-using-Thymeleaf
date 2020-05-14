@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="../css/shards.min.css">
+</head>
+<body style="background: black">
+	<div th:switch="${tsscGame}" class="container my-5">
+		<div class="row">
+			<div class="col-md-10">
+				<h2 th:case="null" style="color:white">No se encuentra ningun tema</h2>
+				<div th:case="*">
+					<h2 class="my-5" style="color:white">Administracion de temas de juego</h2>
+					<MARQUEE style="color:white"> Taller Numero 2 Miguel Romero Rosas </MARQUEE>
+					<table class="table table-striped table-responsive-md">
+						<thead style="color:white">
+							<tr>
+							    <th>Nombre del Tema</th>
+							    <th>Descripción del Tema</th>
+							    <th>Grupos del Tema</th>
+								<th>Sprints del tema</th>
+								<th>Prefijo para grupos Tema</th>
+								<th>Editar el Tema</th>
+								<th>Borrar el Tema</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="topic : ${tsscTopic}">
+					
+							    <td class="text-info" th:text="${topic.name}"></td>
+							    <td class="text-info" th:text="${topic.description}"></td>
+								<td class="text-info" th:text="${topic.defaultGroups}"></td>
+								<td class="text-info" th:text="${topic.defaultSprints}"></td>
+								<td class="text-info" th:text="${topic.groupPrefix}"></td>
+								<td><a sec:authorize="hasRole('superadmin')" th:href="@{/TemaCap/editar/{id}(id=${topic.id})}"
+									class="btn btn-primary"><i class="fas fa-strikethrough fa-spin"></i></a></td>
+								<td><a sec:authorize="hasRole('superadmin')" th:href="@{/TemaCap/eliminar/{id}(id=${topic.id})}"
+									class="btn btn-primary"><i class="fas fa-strikethrough fa-spin"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+			</div>
+		</div>
+		<a href="/gameCap/"> Volver a la pagina anterior<i class="fas fa-home ml-2"></i></a>
+	</div>
+</body>
+</html>
